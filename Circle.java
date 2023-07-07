@@ -1,15 +1,17 @@
-import java.util.ArrayList;
+class Circle extends Shape {
 
-class Circle extends Shape implements inBox{
+    private int radius;
 
-    private String name = "Circle";
+    public Circle(int radius) {
+        this.radius = radius;
+    }
 
-    public String getName() {
-        return name;
+    public int getRadius() {
+        return radius;
     }
 
     @Override
-    public void inBoxMethod(ArrayList<String> nameShaps) {
-        nameShaps.add(this.name);
+    public String getName() {
+        return String.format("Circle {radius = %d}", getRadius());
     }
 }

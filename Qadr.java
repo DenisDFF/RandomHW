@@ -1,16 +1,22 @@
-import java.util.ArrayList;
+class Qadr extends Shape {
 
-public class Qadr extends Shape implements inBox{
+    private int width;
 
-    private String name = "Qadr";
-
-    public String getName() {
-        return name;
+    public Qadr(int width) {
+       this.width = width;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
 
 
     @Override
-    public void inBoxMethod(ArrayList<String> nameShaps) {
-        nameShaps.add(this.name);
+    public String getName() {
+//        return "Qadr" + " {width = "+ width + "}";
+    return String.format("Qadr {width = %d}", getWidth());
     }
 }
+
+

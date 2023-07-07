@@ -1,16 +1,18 @@
-import java.util.ArrayList;
+public class Rectangle extends Qadr{
 
-class Rectangle extends Shape implements inBox {
+    private int height;
 
-    private String name = "Rectangle";
-
-    public String getName() {
-        return name;
+    public Rectangle(int width, int height) {
+        super(width);
+        this.height = height;
     }
 
+    public int getHeight() {
+        return height;
+    }
 
     @Override
-    public void inBoxMethod(ArrayList<String> nameShaps) {
-        nameShaps.add(this.name);
+    public String getName() {
+        return String.format("%s {width = %d, heigth = %d}", "Rectangle", getWidth(), getHeight());
     }
 }
