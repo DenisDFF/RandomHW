@@ -14,6 +14,6 @@ public class Oval extends Circle{
 
     @Override
     public String getName() {
-        return String.format("Oval {radius  = %d, circle = %d}", "Rectangle", getRadius(), getRadius2());
+        return String.format("Oval {radius  = %d, circle = %d}", getRadius(), getRadius2());
     }
 }

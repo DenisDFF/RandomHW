@@ -7,6 +7,7 @@ public class Main {
          m.drawShape(new Circle(17));
          m.drawShape(new Rectangle(12, 10));
          m.drawShape(new Oval(14, 26));
+         m.drawShape(new Triangle(45, 57));
 
     }
 
