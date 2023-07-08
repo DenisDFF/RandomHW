@@ -11,7 +11,7 @@ public class Main {
 
     }
 
-    public void drawShape(Shape shape) {
+    public static void drawShape(Shape shape) {
          System.out.println(shape.getName());
     }
 }
