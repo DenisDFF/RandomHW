@@ -1,4 +1,4 @@
-class MyArrayList {
+public class MyArrayList {
     private Object[] array;
     private int size;
 
@@ -8,24 +8,42 @@ class MyArrayList {
     }
 
     public void add(Object value) {
-        // Добавление элемента в конец массива
+        if (size == array.length) {
+            // Увеличение размера массива при необходимости
+            Object[] newArray = new Object[array.length * 2];
+            System.arraycopy(array, 0, newArray, 0, array.length);
+            array = newArray;
+        }
+        array[size] = value;
+        size++;
     }
 
     public void remove(int index) {
-        // Удаление элемента под индексом
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[size - 1] = null;
+        size--;
     }
 
     public void clear() {
-        // Очистка коллекции
+        for (int i = 0; i < size; i++) {
+            array[i] = null;
+        }
+        size = 0;
     }
 
     public int size() {
-        // Возвращает размер коллекции
         return size;
     }
 
     public Object get(int index) {
-        // Возвращает элемент под индексом
-        return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+        return array[index];
     }
 }
