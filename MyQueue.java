@@ -1,8 +1,17 @@
 public class MyQueue<T> {
-
     private Node<T> head;
     private Node<T> tail;
     private int size;
+
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
+
+        public Node(T value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
 
     public MyQueue() {
         head = null;
@@ -54,15 +63,5 @@ public class MyQueue<T> {
 
     private boolean isEmpty() {
         return size == 0;
-    }
-
-    private static class Node<T> {
-        private T value;
-        private Node<T> next;
-
-        public Node(T value) {
-            this.value = value;
-            this.next = null;
-        }
     }
 }

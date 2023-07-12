@@ -1,18 +1,15 @@
-public class MyArrayList {
-    private Object[] array;
+public class MyArrayList<T> {
+    private T[] array;
     private int size;
 
     public MyArrayList() {
-        array = new Object[10];
+        array = (T[]) new Object[10];
         size = 0;
     }
 
-    public void add(Object value) {
+    public void add(T value) {
         if (size == array.length) {
-            // Увеличение размера массива при необходимости
-            Object[] newArray = new Object[array.length * 2];
-            System.arraycopy(array, 0, newArray, 0, array.length);
-            array = newArray;
+            resizeArray();
         }
         array[size] = value;
         size++;
@@ -20,7 +17,7 @@ public class MyArrayList {
 
     public void remove(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Invalid index");
+            throw new IndexOutOfBoundsException();
         }
         for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
@@ -40,10 +37,16 @@ public class MyArrayList {
         return size;
     }
 
-    public Object get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Invalid index");
+            throw new IndexOutOfBoundsException();
         }
         return array[index];
+    }
+
+    private void resizeArray() {
+        T[] newArray = (T[]) new Object[array.length * 2];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
     }
 }

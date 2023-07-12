@@ -1,6 +1,6 @@
-public class MyHashMap {
+public class MyHashMap<K, V> {
     private static final int DEFAULT_CAPACITY = 16;
-    private Node[] buckets;
+    private Node<K, V>[] buckets;
     private int size;
 
     public MyHashMap() {
@@ -8,16 +8,16 @@ public class MyHashMap {
         size = 0;
     }
 
-    public void put(Object key, Object value) {
+    public void put(K key, V value) {
         int bucketIndex = getBucketIndex(key);
-        Node newNode = new Node(key, value);
+        Node<K, V> newNode = new Node<>(key, value);
 
         if (buckets[bucketIndex] == null) {
             buckets[bucketIndex] = newNode;
             size++;
         } else {
-            Node currentNode = buckets[bucketIndex];
-            Node prevNode = null;
+            Node<K, V> currentNode = buckets[bucketIndex];
+            Node<K, V> prevNode = null;
 
             while (currentNode != null) {
                 if (currentNode.key.equals(key)) {
@@ -33,11 +33,11 @@ public class MyHashMap {
         }
     }
 
-    public void remove(Object key) {
+    public void remove(K key) {
         int bucketIndex = getBucketIndex(key);
 
-        Node currentNode = buckets[bucketIndex];
-        Node prevNode = null;
+        Node<K, V> currentNode = buckets[bucketIndex];
+        Node<K, V> prevNode = null;
 
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
@@ -65,10 +65,10 @@ public class MyHashMap {
         return size;
     }
 
-    public Object get(Object key) {
+    public V get(K key) {
         int bucketIndex = getBucketIndex(key);
 
-        Node currentNode = buckets[bucketIndex];
+        Node<K, V> currentNode = buckets[bucketIndex];
 
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
@@ -80,17 +80,17 @@ public class MyHashMap {
         return null;
     }
 
-    private int getBucketIndex(Object key) {
+    private int getBucketIndex(K key) {
         int hashCode = key.hashCode();
         return Math.abs(hashCode) % buckets.length;
     }
 
-    private static class Node {
-        private Object key;
-        private Object value;
-        private Node next;
+    private static class Node<K, V> {
+        private K key;
+        private V value;
+        private Node<K, V> next;
 
-        public Node(Object key, Object value) {
+        public Node(K key, V value) {
             this.key = key;
             this.value = value;
             this.next = null;

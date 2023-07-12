@@ -1,71 +1,51 @@
-public class MyStack {
+public class MyStack<T> {
     private Object[] array;
     private int size;
-    private int top;
 
     public MyStack() {
         array = new Object[10];
         size = 0;
-        top = -1;
     }
 
-    public void push(Object value) {
+    public void push(T value) {
         if (size == array.length) {
             resizeArray();
         }
-        array[++top] = value;
+        array[size] = value;
         size++;
     }
 
-    public void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new java.lang.IndexOutOfBoundsException();
+    public T peek() {
+        if (size == 0) {
+            throw new RuntimeException("Stack is empty");
         }
-        for (int i = index; i < top; i++) {
-            array[i] = array[i + 1];
+        return (T) array[size - 1];
+    }
+
+    public T pop() {
+        if (size == 0) {
+            throw new RuntimeException("Stack is empty");
         }
-        array[top--] = null;
+        T element = (T) array[size - 1];
+        array[size - 1] = null;
         size--;
+        return element;
     }
 
     public void clear() {
-        for (int i = 0; i <= top; i++) {
+        for (int i = 0; i < size; i++) {
             array[i] = null;
         }
         size = 0;
-        top = -1;
     }
 
     public int size() {
         return size;
     }
 
-    public Object peek() {
-        if (isEmpty()) {
-            throw new java.util.NoSuchElementException();
-        }
-        return array[top];
-    }
-
-    public Object pop() {
-        if (isEmpty()) {
-            throw new java.util.NoSuchElementException();
-        }
-        Object value = array[top];
-        array[top--] = null;
-        size--;
-        return value;
-    }
-
-    private boolean isEmpty() {
-        return size == 0;
-    }
-
     private void resizeArray() {
         Object[] newArray = new Object[array.length * 2];
-        for (int i = 0; i <= top; i++) {
-            newArray[i] = array[i];
-        }
+        System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
     }
 }

@@ -1,13 +1,13 @@
-public class MyLinkedList {
-    private Node head;
+public class MyLinkedList<T> {
+    private Node<T> head;
     private int size;
 
-    private class Node {
-        private Object value;
-        private Node next;
-        private Node prev;
+    private static class Node<T> {
+        private T value;
+        private Node<T> next;
+        private Node<T> prev;
 
-        public Node(Object value) {
+        public Node(T value) {
             this.value = value;
             this.next = null;
             this.prev = null;
@@ -19,12 +19,12 @@ public class MyLinkedList {
         size = 0;
     }
 
-    public void add(Object value) {
-        Node newNode = new Node(value);
+    public void add(T value) {
+        Node<T> newNode = new Node<>(value);
         if (head == null) {
             head = newNode;
         } else {
-            Node current = head;
+            Node<T> current = head;
             while (current.next != null) {
                 current = current.next;
             }
@@ -45,7 +45,7 @@ public class MyLinkedList {
                 head.prev = null;
             }
         } else {
-            Node current = head;
+            Node<T> current = head;
             for (int i = 0; i < index; i++) {
                 current = current.next;
             }
@@ -66,12 +66,12 @@ public class MyLinkedList {
         return size;
     }
 
-    public Object get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
 
-        Node current = head;
+        Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
