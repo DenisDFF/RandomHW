@@ -2,6 +2,7 @@ class MyHashMap<K, V> {
 
     private Entry<K, V>[] table;
     private int capacity = 4;
+    private int size = 0; // Додано поле size для відстеження кількості елементів
 
     static class Entry<K, V> {
         K key;
@@ -26,11 +27,8 @@ class MyHashMap<K, V> {
 
         ensureCapacity();
 
-
         int hash = hash(newKey);
-
         Entry<K, V> newEntry = new Entry<K, V>(newKey, data, null);
-
 
         if (table[hash] == null) {
             table[hash] = newEntry;
@@ -55,10 +53,7 @@ class MyHashMap<K, V> {
             }
             previous.next = newEntry;
         }
-        if (capacity == table.length) {
-            resize();
-        }
-        capacity++;
+        size++; // Збільшення лічильника елементів
     }
 
     public V get(K key) {
@@ -90,9 +85,11 @@ class MyHashMap<K, V> {
                 if (current.key.equals(deleteKey)) {
                     if (previous == null) { // delete first entry node.
                         table[hash] = table[hash].next;
+                        size--; // Зменшення лічильника елементів
                         return true;
                     } else {
                         previous.next = current.next;
+                        size--; // Зменшення лічильника елементів
                         return true;
                     }
                 }
@@ -123,14 +120,15 @@ class MyHashMap<K, V> {
     }
 
     private void ensureCapacity() {
-        if (size() >= capacity * 0.75) {
+        if (size >= capacity * 0.75) { // Використовуємо size замість size()
             resize();
         }
     }
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        Entry<K, V>[] newTable = new Entry[capacity * 2];
+        int newCapacity = capacity * 2;
+        Entry<K, V>[] newTable = new Entry[newCapacity];
 
         for (Entry<K, V> entry : table) {
             while (entry != null) {
@@ -143,18 +141,21 @@ class MyHashMap<K, V> {
         }
 
         table = newTable;
-        capacity *= 2;
+        capacity = newCapacity;
     }
 
     public int size() {
-        int count = 0;
-        for (Entry<K, V> entry : table) {
-            while (entry != null) {
-                count++;
-                entry = entry.next;
-            }
-        }
-        return count;
+        return size;
     }
+}
 
+class Main {
+    public static void main(String[] args) {
+        MyHashMap<Integer, Integer> map = new MyHashMap<>();
+        for (int i = 0; i < 1000; i++) {
+            map.put(i, i);
+        }
+
+        System.out.println(map.size());
+    }
 }
