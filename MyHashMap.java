@@ -22,25 +22,25 @@ class MyHashMap<K, V> {
 
     public void put(K newKey, V data) {
         if (newKey == null)
-            return; // does not allow storing null.
+            return;
 
         ensureCapacity();
 
-        // calculate hash of key.
+
         int hash = hash(newKey);
-        // create new entry.
+
         Entry<K, V> newEntry = new Entry<K, V>(newKey, data, null);
 
-        // if table location does not contain any entry, store entry there.
+
         if (table[hash] == null) {
             table[hash] = newEntry;
         } else {
             Entry<K, V> previous = null;
             Entry<K, V> current = table[hash];
 
-            while (current != null) { // we have reached last entry of bucket.
+            while (current != null) {
                 if (current.key.equals(newKey)) {
-                    if (previous == null) { // node has to be insert on first of bucket.
+                    if (previous == null) {
                         newEntry.next = current.next;
                         table[hash] = newEntry;
                         return;
@@ -55,6 +55,10 @@ class MyHashMap<K, V> {
             }
             previous.next = newEntry;
         }
+        if (capacity == table.length) {
+            resize();
+        }
+        capacity++;
     }
 
     public V get(K key) {
@@ -126,8 +130,8 @@ class MyHashMap<K, V> {
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        capacity *= 2;
-        Entry<K, V>[] newTable = new Entry[capacity];
+        Entry<K, V>[] newTable = new Entry[capacity * 2];
+
         for (Entry<K, V> entry : table) {
             while (entry != null) {
                 Entry<K, V> next = entry.next;
@@ -137,7 +141,9 @@ class MyHashMap<K, V> {
                 entry = next;
             }
         }
+
         table = newTable;
+        capacity *= 2;
     }
 
     public int size() {
